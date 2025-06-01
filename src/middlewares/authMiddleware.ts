@@ -29,9 +29,10 @@ export const authenticateJWT = (
       ;(req as any).user = user
       next()
     })
-    .catch(() =>
+    .catch(() => {
       res.status(401).json({ success: false, message: 'Invalid token' })
-    )
+      return
+    })
 }
 
 export const authorizeUserAdmin = (

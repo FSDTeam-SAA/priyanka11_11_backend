@@ -1,7 +1,10 @@
 import express from 'express'
 import { addData, getData, deleteData, editData } from '../controllers/data.controller'
 import upload from '../config/multer'
-import { authorizeUserAdmin } from '../middlewares/authMiddleware'
+import {
+  authenticateJWT,
+  authorizeUserAdmin,
+} from '../middlewares/authMiddleware'
 
 const router = express.Router()
 
@@ -9,10 +12,10 @@ const router = express.Router()
 router.post('/add/data', upload.single('image'), addData)
 
 // get data by type
-router.get('/data', authorizeUserAdmin, getData)
+router.get('/data', getData)
 
 // delete data
-router.delete('/data/:id', authorizeUserAdmin, deleteData)
+router.delete('/data/:id',  deleteData)
 
 // update data 
 router.put('/data/:id', upload.single('image'), editData)

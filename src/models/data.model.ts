@@ -8,9 +8,8 @@ export interface IData extends Document {
 
 const dataSchema: Schema = new Schema(
   {
-    image: { type: String, required: true },
-    title: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    image: { type: String,  },
+    title: { type: String, },
     type: {
       type: String,
       enum: ['service', 'project', 'Client', "brandPartner"]
