@@ -73,10 +73,10 @@ export const editData = async (
     const { id } = req.params
     const { title, type } = req.body
 
-    if (!req.file || !req.file.path) {
-      res.status(400).json({ success: false, message: 'No file uploaded' })
-      return
-    }
+    // if (!req.file || !req.file.path) {
+    //   res.status(400).json({ success: false, message: 'No file uploaded' })
+    //   return
+    // }
     const result = await cloudinary.v2.uploader.upload(req.file.path, {
       folder: 'data',
     })
