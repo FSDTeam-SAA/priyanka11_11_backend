@@ -73,21 +73,28 @@ export const editData = async (
     const { id } = req.params
     const { title, type } = req.body
 
-    // if (!req.file || !req.file.path) {
-    //   res.status(400).json({ success: false, message: 'No file uploaded' })
-    //   return
-    // }
-    const result = await cloudinary.v2.uploader.upload(req.file.path, {
-      folder: 'data',
-    })
+  
+    let imageUrl: string | undefined;
+
+    if (req.file && req.file.path) {
+      const result = await cloudinary.v2.uploader.upload(req.file.path, {
+        folder: 'data',
+      });
+      imageUrl = result.secure_url;
+    }
+
+    const updateFields: any = { title, type };
+    if (imageUrl) {
+      updateFields.image = imageUrl;
+    }
 
     const updatedData = await data.findByIdAndUpdate(
       id,
-      { title, type, image: result.secure_url },
+      updateFields,
       { new: true }
-    )
-    res.status(200).json({ success: true, data: updatedData })
+    );
+    res.status(200).json({ success: true, data: updatedData });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
